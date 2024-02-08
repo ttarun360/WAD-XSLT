@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Table</title>
+    <style type="text/css">
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+    
+    
+    <script>
+        function viewData() {
+            var xml = document.getElementById('xmlData').value;
+            var xsl = document.getElementById('xslData').value;
+            var processor = new XSLTProcessor();
+            var xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
+            var xslDoc = new DOMParser().parseFromString(xsl, 'text/xml');
+            processor.importStylesheet(xslDoc);
+            var result = processor.transformToDocument(xmlDoc);
+            document.getElementById('output').innerHTML = new XMLSerializer().serializeToString(result);
+        }
+        function hideTable() {
+            document.getElementById('output').innerHTML = ''; // Clear the table content
+        }
+    </script>
+</head>
+<body>
+    <h2>Employee Table</h2>
+    <textarea id="xmlData" style="display:none;"><?xml version="1.0" encoding="UTF-8"?>
+        <employeesystem>
+            <employee>
+            <eid>1</eid>
+            <ename>Gaurav</ename>
+            <edesign>Technical Member</edesign>
+            </employee>
+            <employee>
+            <eid>2</eid>
+            <ename>Harshik</ename>
+            <edesign>Technical Designer</edesign>
+            </employee>
+            <employee>
+            <eid>3</eid>
+            <ename>Satvik</ename>
+            <edesign>Core Member</edesign>
+            </employee>
+            <employee>
+            <eid>4</eid>
+            <ename>alekhya</ename>
+            <edesign>Technical Lead</edesign>
+            </employee>
+            <employee>
+            <eid>5</eid>
+            <ename>Anoop</ename>
+            <edesign>Technical Executive</edesign>
+            </employee>
+            <employee>
+            <eid>6</eid>
+            <ename>Deepak</ename>
+            <edesign>Team Member</edesign>
+            </employee>
+            <employee>
+            <eid>7</eid>
+            <ename>Hemanjali</ename>
+            <edesign>Tech Member</edesign>
+            </employee>
+            <employee>
+            <eid>8</eid>
+            <ename>Jatin</ename>
+            <edesign>Member</edesign>
+            </employee>
+            <employee>
+            <eid>9</eid>
+            <ename>Laksman</ename>
+            <edesign>Technical Member</edesign>
+            </employee>
+            <employee>
+            <eid>10</eid>
+            <ename>Madhav</ename>
+            <edesign>Peon</edesign>
+            </employee>
+            <employee>
+            <eid>11</eid>
+            <ename>Pari</ename>
+            <edesign>Office Boy</edesign>
+            </employee>
+            <employee>
+            <eid>12</eid>
+            <ename>Bhuvan</ename>
+            <edesign>Technical Head</edesign>
+            </employee>
+            <employee>
+            <eid>13</eid>
+            <ename>cherri</ename>
+            <edesign>CEO</edesign>
+            </employee>
+            <employee>
+            <eid>14</eid>
+            <ename>dinesh</ename>
+            <edesign>PA</edesign>
+            </employee>
+            <employee>
+            <eid>15</eid>
+            <ename>kalyani</ename>
+            <edesign>Design Member</edesign>
+            </employee>
+            <employee>
+            <eid>16</eid>
+            <ename>kanti</ename>
+            <edesign>Manager</edesign>
+            </employee>
+            <employee>
+            <eid>17</eid>
+            <ename>likitha</ename>
+            <edesign>Logistics</edesign>
+            </employee>
+            <employee>
+            <eid>18</eid>
+            <ename>bhargavi</ename>
+            <edesign>Social Outreach</edesign>
+            </employee>
+            <employee>
+            <eid>19</eid>
+            <ename>Cm</ename>
+            <edesign>PR</edesign>
+            </employee>
+            <employee>
+            <eid>20</eid>
+            <ename>mayank</ename>
+            <edesign>Intro Talks</edesign>
+            </employee>
+            </employeesystem>
+</textarea>
+    <textarea id="xslData" style="display:none;"><?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+            <body>
+                <h2>Entries Table</h2>
+                <table border="1">
+                    <tr>
+                        <th>EID</th>
+                        <th>EName</th>
+                        <th>Edesign</th>
+                    </tr>
+                    <xsl:for-each select="employeesystem/employee">
+                        <tr>
+                            <td><xsl:value-of select="eid"/></td>
+                            <td><xsl:value-of select="ename"/></td>
+                            <td><xsl:value-of select="edesign"/></td>
+                        </tr>
+                    </xsl:for-each>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>
+</textarea>
+    <button id="viewbutton" onclick="viewData()">View Data</button>
+    <button id="hideButton" onclick="hideTable()">Hide Table</button>
+    <div id="output"></div>
+</body>
+</html>
